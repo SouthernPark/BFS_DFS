@@ -97,7 +97,7 @@ class Queue:
         if self.numElems == len(self.queue):
             self.resize()
         self.queue[self.rear] = val
-        self.rear = (self.rear + 1) % self.numElems
+        self.rear = (self.rear + 1) % len(self.queue)
         self.numElems += 1
         return
 
@@ -110,6 +110,6 @@ class Queue:
         if self.numElems == 0:
             return None
         res = self.queue[self.front]
-        self.front = (self.front + 1) % self.numElems
+        self.front = (self.front + 1) % len(self.queue)
         self.numElems -= 1
         return res

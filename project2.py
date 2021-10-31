@@ -25,6 +25,19 @@ OUTPUTS
 path: The path from maze.start to maze.exit.
 """
 
+def find_path(struct, maze):
+    for vertex_t in maze.start.neigh:
+        vertex_t.dist = 1
+        vertex_t.prev = maze.start
+        struct.push(vertex_t)
+
+    while not struct.isEmpty():
+        current = struct.pop()
+        for vertex_t in current.neigh:
+            if vertex_t.dist > current.dist + 1:
+                vertex_t.dist = current.dist + 1
+                vertex_t.prev = current
+                struct.push(vertex_t)
 
 def bdfs(maze, alg):
     # If the alg is not BFS or DFS, raise exception.
@@ -39,35 +52,51 @@ def bdfs(maze, alg):
         maze.adjList[i].visited = False
 
     res = []
+    maze.start.dist = 0
+    maze.start.visited = True
     if alg == 'DFS':
         stack = Stack()
-        maze.start.dist = 0
-        maze.start.visited = True
-        for vertex_t in maze.start.neigh:
-            # vertex_t.visited = True
-            vertex_t.dist = 1
-            vertex_t.prev = maze.start
-            stack.push(vertex_t)
+        find_path(stack, maze)
+        # for vertex_t in maze.start.neigh:
+        #     vertex_t.dist = 1
+        #     vertex_t.prev = maze.start
+        #     stack.push(vertex_t)
+        #
+        # while not stack.isEmpty():
+        #     current = stack.pop()
+        #     for vertex_t in current.neigh:
+        #         if vertex_t.dist > current.dist + 1:
+        #             vertex_t.dist = current.dist + 1
+        #             vertex_t.prev = current
+        #             stack.push(vertex_t)
 
-        while not stack.isEmpty():
-            current = stack.pop()
-            for vertex_t in current.neigh:
-                if vertex_t.dist > current.dist + 1:
-                    vertex_t.dist = current.dist + 1
-                    vertex_t.prev = current
-                    # vertex_t.visited = True
-                    stack.push(vertex_t)
 
-        temp = maze.exit
-        while temp is not None:
-            res.append(temp.rank)
-            temp = temp.prev
-    return res[::-1]
+
     ##### Your implementation goes here. #####
+    if alg == 'BFS':
+        queue = Queue()
+        find_path(queue, maze)
+        # for vertex_t in maze.start.neigh:
+        #     vertex_t.dist = 1
+        #     vertex_t.prev = maze.start
+        #     queue.push(vertex_t)
+        #
+        # while not queue.isEmpty():
+        #     current = queue.pop()
+        #     for vertex_t in current.neigh:
+        #         if vertex_t.dist > current.dist + 1:
+        #             vertex_t.dist = current.dist + 1
+        #             vertex_t.prev = current
+        #             queue.push(vertex_t)
 
+    temp = maze.exit
+    while temp is not None:
+        res.append(temp.rank)
+        temp = temp.prev
+    return res[::-1]
 
 """
 Main function.
 """
 if __name__ == "__main__":
-    testMazes(False)
+    testMazes(True)
