@@ -5,9 +5,9 @@ Fall 2021
 
 p2queue.py
 
-Partner 1:
-Partner 2:
-Date:
+Partner 1: QiangQiang Liu
+Partner 2: Zelin Jin
+Date: 11/01/2021
 """
 
 """
@@ -54,6 +54,7 @@ class Queue:
 
     def isFull(self):
         ##### IMPLEMENT! #####
+        # The queue is full if the number of stored elements equals to the size of queue.
         if len(self.queue) == self.numElems:
             return True
         return False
@@ -75,14 +76,17 @@ class Queue:
 
     def resize(self):
         ##### IMPLEMENT! #####
+        # Declare a temp array of size 2 * numElems to store more elements.
         temp_arr = [None for x in range(0, 2 * self.numElems)]
         index = 0
+        # Store elements in original array to the temp array.
         for i in range(self.front, len(self.queue)):
             temp_arr[index] = self.queue[i]
             index += 1
         for i in range(0, self.rear):
             temp_arr[index] = self.queue[i]
             index += 1
+        # Use the temp array as new array and initialize front and rear parameter.
         self.queue = temp_arr
         self.front = 0
         self.rear = self.numElems
@@ -94,9 +98,12 @@ class Queue:
 
     def push(self, val):
         ##### IMPLEMENT! #####
+        # If the queue is full, resize the queue.
         if self.numElems == len(self.queue):
             self.resize()
+        # Add value to the end of the queue.
         self.queue[self.rear] = val
+        # Check if the rear is at the end of the queue. If so, put it to the start of queue to enable circular queue.
         self.rear = (self.rear + 1) % len(self.queue)
         self.numElems += 1
         return
@@ -109,7 +116,9 @@ class Queue:
         ##### IMPLEMENT! #####
         if self.numElems == 0:
             return None
+        # Store the target value into parameter res.
         res = self.queue[self.front]
+        # Do modulus to front to enable circular queue.
         self.front = (self.front + 1) % len(self.queue)
         self.numElems -= 1
         return res

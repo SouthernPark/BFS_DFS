@@ -5,9 +5,9 @@ Fall 2021
 
 p2stack.py
 
-Partner 1:
-Partner 2:
-Date:
+Partner 1: QiangQiang Liu
+Partner 2: Zelin Jin
+Date: 11/01/2021
 """
 
 """
@@ -48,6 +48,7 @@ class Stack:
     """
     def isFull(self):
         ##### IMPLEMENT! #####
+        # The stack is full if the number of stored elements equals to the size of queue.
         if len(self.stack) == self.numElems:
             return True
         return False
@@ -66,9 +67,12 @@ class Stack:
     """
     def resize(self):
         ##### IMPLEMENT! #####
+        # Declare a temp array of size 2 * numElems to store more elements.
         temp_arr = [None for x in range(0, 2 * self.numElems)]
+        # Copy the elements in original array to the new temp array.
         for i in range(0, self.numElems):
             temp_arr[i] = self.stack[i]
+        # Set the temp array as new array.
         self.stack = temp_arr
         return
 
@@ -77,8 +81,10 @@ class Stack:
     """
     def push(self, val):
         ##### IMPLEMENT! #####
+        # If the stack is full, resize the stack.
         if self.isFull():
             self.resize()
+        # Renew the parameters and store the number to the top of the stack
         self.top += 1
         self.numElems += 1
         self.stack[self.top] = val
@@ -91,7 +97,7 @@ class Stack:
         ##### IMPLEMENT! #####
         if self.top < 0:
             return None
-
         self.top -= 1
         self.numElems -= 1
+        # Return the target number on the top of the stack
         return self.stack[self.top + 1]
