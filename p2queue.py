@@ -16,6 +16,7 @@ Queue Class
 
 
 class Queue:
+
     """
     Class attributes:
     queue    # The array for the queue.
@@ -54,9 +55,7 @@ class Queue:
 
     def isFull(self):
         ##### IMPLEMENT! #####
-        if len(self.queue) == self.numElems:
-            return True
-        return False
+        return
 
     """
     isEmpty function to check if the queue is empty.
@@ -64,9 +63,7 @@ class Queue:
 
     def isEmpty(self):
         ##### IMPLEMENT! #####
-        if self.numElems == 0:
-            return True
-        return False
+        return
 
     """
     resize function to resize the queue by doubling its size.
@@ -75,17 +72,6 @@ class Queue:
 
     def resize(self):
         ##### IMPLEMENT! #####
-        temp_arr = [None for x in range(0, 2 * self.numElems)]
-        index = 0
-        for i in range(self.front, len(self.queue)):
-            temp_arr[index] = self.queue[i]
-            index += 1
-        for i in range(0, self.rear):
-            temp_arr[index] = self.queue[i]
-            index += 1
-        self.queue = temp_arr
-        self.front = 0
-        self.rear = self.numElems
         return
 
     """
@@ -94,11 +80,6 @@ class Queue:
 
     def push(self, val):
         ##### IMPLEMENT! #####
-        if self.numElems == len(self.queue):
-            self.resize()
-        self.queue[self.rear] = val
-        self.rear = (self.rear + 1) % len(self.queue)
-        self.numElems += 1
         return
 
     """
@@ -107,9 +88,4 @@ class Queue:
 
     def pop(self):
         ##### IMPLEMENT! #####
-        if self.numElems == 0:
-            return None
-        res = self.queue[self.front]
-        self.front = (self.front + 1) % len(self.queue)
-        self.numElems -= 1
-        return res
+        return None
