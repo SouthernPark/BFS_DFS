@@ -55,7 +55,10 @@ class Queue:
 
     def isFull(self):
         ##### IMPLEMENT! #####
-        return
+        # checck the number of elements is equal to the size
+        if(self.numElems == len(self.queue)):
+            return True
+        return False
 
     """
     isEmpty function to check if the queue is empty.
@@ -63,7 +66,9 @@ class Queue:
 
     def isEmpty(self):
         ##### IMPLEMENT! #####
-        return
+        if(self.numElems == 0):
+            return True
+        return False
 
     """
     resize function to resize the queue by doubling its size.
@@ -72,6 +77,14 @@ class Queue:
 
     def resize(self):
         ##### IMPLEMENT! #####
+
+        temp = [None for i in range(len(self.queue)*2)]
+        # move the ele in queue to temp
+        for i in range(self.numElems):
+            temp[i] = self.queue[self.front]
+            self.front = (self.front + 1) % len(self.queue)
+        self.queue = temp
+        # self.numElems does not change
         return
 
     """
@@ -80,6 +93,17 @@ class Queue:
 
     def push(self, val):
         ##### IMPLEMENT! #####
+        # firstly check if the queue is full
+        if(self.isFull()):
+            # resize if full
+            self.resize()
+        # set the last element to val
+        self.queue[self.rear] = val
+        # update the rear
+        self.rear = (self.rear + 1) % len(self.queue)
+        # update the numElements
+        self.numElems += 1
+
         return
 
     """
@@ -88,4 +112,15 @@ class Queue:
 
     def pop(self):
         ##### IMPLEMENT! #####
-        return None
+        # check if the queue is empty
+        if(self.isEmpty()):
+            return None
+
+        # get the first element
+        res = self.queue[self.front]
+        # update the front pointer
+        self.front = (self.front + 1) % len(self.queue)
+        # update the numElement
+        self.numElems -= 1
+
+        return res
